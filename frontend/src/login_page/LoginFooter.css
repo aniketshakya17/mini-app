@@ -1,0 +1,47 @@
+.login-footer {
+  color: white;
+  padding: 20px 40px;
+  font-family: Arial, sans-serif;
+}
+
+.footer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-brand {
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+  font-size: 14px;
+}
+
+.footer-line {
+  margin: 14px 0;
+  height: 1px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.6);
+}
+.footer-copy {
+  text-align: center;
+  font-size: 13px;
+}
+@media (max-width: 768px) {
+  .footer-top {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-links {
+    font-size: 13px;
+  }
+
+  .footer-brand {
+    font-size: 24px;
+  }
+}
