@@ -1,0 +1,63 @@
+.header {
+  height: 60px;
+  background-color: #1e88e5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  color: white;
+  
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  margin-left: 20px;
+}
+
+.header-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+.header-user-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  min-width: 0;
+}
+
+.header-username {
+  font-size: 14px;
+  font-weight: 300;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-company {
+  font-size: 10px;
+  opacity: 0.8;
+}
+
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 20px;
+  flex-shrink: 0;   
+}
+
+.header-right img {
+  width: 24px;
+  height: auto;
+}
+
+
