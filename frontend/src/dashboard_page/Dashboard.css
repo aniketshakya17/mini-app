@@ -1,23 +1,65 @@
 .dashboard {
   width: 100%;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
   background: #f7f9fc;
   font-family: Arial, sans-serif;
 }
 
+.dashboard-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #fff;
+}
+
 .dashboard-body {
   display: flex;
-  height: calc(100vh - 60px);
+  flex: 1;
+  overflow: hidden;
 }
 
 .dashboard-content {
   flex: 1;
-  padding: 20px;
   overflow-y: auto;
+  min-width: 0;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+.dashboard-body,
+.dashboard-content,
+.price-list,
+.price-table-wrapper {
+  width: 100%;
+  max-width: 100%;
+}
+
+}
+
+@media (max-width: 430px) and (orientation: portrait) {
+  .dashboard {
+    background: #ffffff;
+  }
+
   .dashboard-body {
     flex-direction: column;
+  }
+
+  .dashboard-content {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 932px) and (orientation: landscape) {
+  .price-list {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .price-top,
+  .actions {
+    width: 100%;
   }
 }

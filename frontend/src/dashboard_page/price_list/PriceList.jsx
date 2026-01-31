@@ -2,6 +2,7 @@ import "./PriceList.css";
 import Search from "./search/Search";
 import Actions from "./actions/Actions";
 import PriceListTable from "./table/PriceListTable";
+import PriceListHeader from "./table/PriceListHeader";
 
 function PriceList() {
   return (
@@ -10,11 +11,12 @@ function PriceList() {
         <div className="price-top">
           <Search />
         </div>
-        <div className="actions">
-          <Actions></Actions>
-        </div>
+
+          <Actions />
+        
       </div>
-      <PriceListTable></PriceListTable>
+      <PriceListHeader></PriceListHeader>
+      <PriceListTable />
     </>
   );
 }

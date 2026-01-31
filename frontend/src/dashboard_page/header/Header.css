@@ -1,16 +1,15 @@
 .header {
-  height: 60px;
+  height: 80px;
   background-color: #1e88e5;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
   color: white;
-  
+  width: 100%;
   font-family: Arial, sans-serif;
   box-sizing: border-box;
 }
-
 
 .header-left {
   display: flex;
@@ -46,13 +45,12 @@
   opacity: 0.8;
 }
 
-
 .header-right {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-right: 20px;
-  flex-shrink: 0;   
+  flex-shrink: 0;
 }
 
 .header-right img {

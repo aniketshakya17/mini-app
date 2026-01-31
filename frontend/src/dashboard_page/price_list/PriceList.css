@@ -1,6 +1,50 @@
 .price-list {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 20px;
+  padding: 16px;
+  background: #f8f9fb;
 }
+
+.price-top {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.price-header {
+  position: sticky;
+  top: 200px;
+  z-index: 20;
+  background: #f8f9fb;
+}
+@media (max-width: 430px) and (orientation: portrait) {
+  .price-list {
+    position: static;
+    top: auto;
+    z-index: auto;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 0 8px;
+    background: #ffffff;
+  }
+
+  .price-top {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 932px) and (orientation: landscape) {
+  .price-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .price-top {
+    width: 100%;
+  }
+
+
+}
+
+

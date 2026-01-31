@@ -9,12 +9,17 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      <Header onMenuToggle={() => setMenuOpen(!menuOpen)} />
+      <div className="dashboard-header">
+        <Header onMenuClick={() => setMenuOpen(!menuOpen)} />
+      </div>
 
       <div className="dashboard-body">
         <Menu isOpen={menuOpen} />
 
-        <div className="dashboard-content">
+        <div
+          className="dashboard-content"
+          onClick={() => setMenuOpen(false)}
+        >
           <PriceList />
         </div>
       </div>

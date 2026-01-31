@@ -20,6 +20,7 @@ function Menu({ isOpen }) {
   return (
     <aside className={`side-menu ${isOpen ? "open" : ""}`}>
       <div className="menu-title">Menu</div>
+      <hr />
 
       <MenuItem icon={<FaFileInvoice />} color="#00bcd4" label="Invoices" />
       <MenuItem icon={<FaUsers />} color="#4caf50" label="Customers" />

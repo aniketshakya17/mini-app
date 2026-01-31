@@ -1,28 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import "./PriceListTable.css";
 import PriceListRow from "./PriceListRow";
 
 function PriceListTable() {
-  return (
-    <form className="price-table" >
-      <div className="price-header price-grid">
-        <span className="col-article">Article No.</span>
-        <span className="col-product">Product/Service</span>
-        <span className="col-inprice">In Price</span>
-        <span className="col-price">Price</span>
-        <span className="col-unit">Unit</span>
-        <span className="col-stock">In Stock</span>
-        <span className="col-desc">Description</span>
-        <span></span>
-      </div>
+  const [activeRow, setActiveRow] = useState(null);
 
-      <PriceListRow />
-      <PriceListRow />
-      <PriceListRow />
-      <PriceListRow />
-      <PriceListRow />
-      <PriceListRow />
-    </form>
+  return (
+    <div className="price-table-wrapper">
+      <form className="price-table">
+
+
+        {Array.from({ length: 20 }).map((_, index) => (
+          <PriceListRow
+            key={index}
+            isActive={activeRow === index}
+            onClick={() => setActiveRow(index)}
+          />
+        ))}
+      </form>
+    </div>
   );
 }
 

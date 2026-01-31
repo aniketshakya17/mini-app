@@ -1,11 +1,13 @@
 import React from "react";
 import "./Header.css";
 
-function Header({ onMenuToggle }) {
+function Header({ onMenuClick }) {
   return (
     <header className="header">
       <div className="header-left">
-     
+        <button className="hamburger" onClick={onMenuClick} style={{backgroundColor:"#1e88e5" , border:"none"}}>
+          <i class="fa-solid fa-bars" style={{color:"white"}}></i>
+        </button>
 
         <img
           className="header-avatar"
@@ -21,7 +23,10 @@ function Header({ onMenuToggle }) {
 
       <div className="header-right">
         <span>English</span>
-        <img src="https://storage.123fakturere.no/public/flags/GB.png" alt="flag" />
+        <img
+          src="https://storage.123fakturere.no/public/flags/GB.png"
+          alt="flag"
+        />
       </div>
     </header>
   );
