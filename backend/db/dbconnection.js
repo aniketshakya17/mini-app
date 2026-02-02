@@ -9,12 +9,16 @@ let PriceList;
 
 const MANUAL_USERS = [
   {
-    username: "john",
+    username: "john@gmail.com",
     password: "john123",
   },
   {
-    username: "emma",
+    username: "emma@gmail.com",
     password: "emma123",
+  },
+  {
+    username: "bob@gmail.com",
+    password: "bob123",
   },
 ];
 
@@ -32,17 +36,21 @@ export const dbConnection = async (database, username, password) => {
     User = createUserModel(sequelize);
     PriceList = createPriceListModel(sequelize);
 
-    await sequelize.sync();
+    User.hasMany(PriceList, { foreignKey: "userId" });
+    PriceList.belongsTo(User, { foreignKey: "userId" });
+
+    await sequelize.sync({ alter: true });
 
     for (const u of MANUAL_USERS) {
-      const [user, created] = await User.findOrCreate({
+      let user = await User.findOne({
         where: { username: u.username },
-        defaults: {
-          password: await bcrypt.hash(u.password, 10),
-        },
       });
 
-      if (created) {
+      if (!user) {
+        user = await User.create({
+          username: u.username,
+          password: await bcrypt.hash(u.password, 10),
+        });
         console.log(`User ${u.username} created`);
       }
     }

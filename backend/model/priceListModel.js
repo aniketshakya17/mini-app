@@ -2,19 +2,57 @@ import { DataTypes } from "sequelize";
 
 const createPriceListModel = (sequelize) => {
   return sequelize.define(
-    "pricelists",            
+    "pricelists",
     {
-      articleNo: DataTypes.STRING,
-      productService: DataTypes.STRING,
-      inPrice: DataTypes.FLOAT,
-      price: DataTypes.FLOAT,
-      unit: DataTypes.STRING,
-      inStock: DataTypes.INTEGER,
-      description: DataTypes.STRING,
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+
+      articleNo: {
+        type: DataTypes.STRING,
+        defaultValue: "",
+      },
+
+      productService: {
+        type: DataTypes.STRING,
+        defaultValue: "",
+      },
+
+      inPrice: {
+        type: DataTypes.FLOAT,
+        defaultValue: 0,
+      },
+
+      price: {
+        type: DataTypes.FLOAT,
+        defaultValue: 0,
+      },
+
+      unit: {
+        type: DataTypes.STRING,
+        defaultValue: "pcs",
+      },
+
+      inStock: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+
+      description: {
+        type: DataTypes.STRING,
+        defaultValue: "",
+      },
     },
     {
       freezeTableName: true,
-      timestamps: true,
+      timestamps: false,
     }
   );
 };

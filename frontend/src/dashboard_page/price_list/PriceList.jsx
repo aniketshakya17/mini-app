@@ -3,8 +3,11 @@ import Search from "./search/Search";
 import Actions from "./actions/Actions";
 import PriceListTable from "./table/PriceListTable";
 import PriceListHeader from "./table/PriceListHeader";
+import { useRef } from "react";
 
 function PriceList() {
+  const tableRef = useRef(null);
+
   return (
     <>
       <div className="price-list">
@@ -12,11 +15,14 @@ function PriceList() {
           <Search />
         </div>
 
-          <Actions />
-        
+        <Actions
+          onSave={() => tableRef.current?.saveAll()}
+          saving={tableRef.current?.saving}
+        />
       </div>
-      <PriceListHeader></PriceListHeader>
-      <PriceListTable />
+
+      <PriceListHeader />
+      <PriceListTable ref={tableRef} />
     </>
   );
 }

@@ -32,6 +32,32 @@
     width: 100%;
   }
 }
+@media (min-width: 431px) and (max-width: 1024px) {
+
+  .price-top {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .search-wrapper {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .actions {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 0 16px;
+    order: 2; 
+    flex-wrap: wrap;
+  }
+}
+
 @media screen and (max-width: 932px) and (orientation: landscape) {
   .price-list {
     display: flex;
