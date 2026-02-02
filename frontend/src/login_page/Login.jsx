@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import LoginHeader from "./LoginHeader";
 import LoginFooter from "./LoginFooter";
+import { Link } from "react-router-dom";
 import "./Login.css";
 
 function Login() {
@@ -40,7 +41,7 @@ function Login() {
             />
           </div>
 
-          <button className="login-button">Log in</button>
+          <Link to="/dashboard"><button className="login-button">Log in</button></Link>
 
           <div className="login-links">
             <span>Register</span>

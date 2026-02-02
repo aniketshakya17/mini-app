@@ -8,9 +8,9 @@ function LoginFooter() {
         <div className="footer-brand">123 Fakturera</div>
 
         <div className="footer-links">
-          <span>Home</span>
-          <span>Order</span>
-          <span>Contact us</span>
+          <span className="footer-links link">Home</span>
+          <span className="footer-links link">Order</span>
+          <span className="footer-links link">Contact us</span>
         </div>
       </div>
 

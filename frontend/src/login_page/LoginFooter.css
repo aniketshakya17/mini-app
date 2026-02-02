@@ -21,6 +21,10 @@
   font-size: 14px;
 }
 
+.footer-links.link {
+  cursor: pointer;
+}
+
 .footer-line {
   margin: 14px 0;
   height: 1px;

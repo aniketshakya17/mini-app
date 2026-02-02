@@ -20,11 +20,11 @@ function LoginHeader() {
       </div>
 
       <nav className="nav-menu">
-        <span>Home</span>
-        <span>Order</span>
-        <span>Our Customers</span>
-        <span>About us</span>
-        <span>Contact Us</span>
+        <span className="nav-menu link">Home</span>
+        <span className="nav-menu link">Order</span>
+        <span className="nav-menu link">Our Customers</span>
+        <span className="nav-menu link">About us</span>
+        <span className="nav-menu link">Contact Us</span>
       </nav>
 
       <div className="header-right">

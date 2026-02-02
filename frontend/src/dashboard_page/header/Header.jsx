@@ -6,7 +6,7 @@ function Header({ onMenuClick }) {
     <header className="header">
       <div className="header-left">
         <button className="hamburger" onClick={onMenuClick} style={{backgroundColor:"#1e88e5" , border:"none"}}>
-          <i class="fa-solid fa-bars" style={{color:"white"}}></i>
+          <i className="fa-solid fa-bars" style={{color:"white"}}></i>
         </button>
 
         <img

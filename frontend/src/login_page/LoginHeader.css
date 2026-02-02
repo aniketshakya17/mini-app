@@ -29,6 +29,10 @@
   font-size: 15px;
 }
 
+.nav-menu.link {
+  cursor: pointer;
+}
+
 .lang {
   display: flex;
   align-items: center;
@@ -66,7 +70,7 @@
     padding: 32px 100px;
   }
   .nav-menu {
-    gap: 30px;;
+    gap: 30px;
   }
 }
 

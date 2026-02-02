@@ -80,6 +80,7 @@
 }
 .price-table-wrapper {
   overflow-y: auto;
+  padding-top: 8px;
   height: calc(100vh - 260px);
 }
 

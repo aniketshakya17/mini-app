@@ -4,7 +4,7 @@
   flex-direction: column;
   background-size: cover;
   background-position: center;
-  font-family: Arial, sans-serif;;
+  font-family: Arial, sans-serif;
 }
 
 .login-wrapper {
@@ -53,7 +53,7 @@
   right: 14px;
   top: 45%;
   cursor: pointer;
-  opacity: 0.6;
+  opacity: 0.3;
 }
 
 .login-button {

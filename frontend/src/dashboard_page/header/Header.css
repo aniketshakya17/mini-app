@@ -57,5 +57,17 @@
   width: 24px;
   height: auto;
 }
+.hamburger {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .hamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+}
 
 
