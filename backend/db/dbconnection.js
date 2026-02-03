@@ -10,29 +10,18 @@ let PriceList;
 let Translation;
 
 const MANUAL_USERS = [
-  {
-    username: "john@gmail.com",
-    password: "john123",
-  },
-  {
-    username: "emma@gmail.com",
-    password: "emma123",
-  },
-  {
-    username: "bob@gmail.com",
-    password: "bob123",
-  },
+  { username: "john@gmail.com", password: "john123" },
+  { username: "emma@gmail.com", password: "emma123" },
+  { username: "bob@gmail.com", password: "bob123" },
 ];
 
-export const dbConnection = async (database, username, password) => {
-  sequelize = new Sequelize(database, username, password, {
-    host: "localhost",
-    dialect: "postgres",
-    logging: false,
-  });
-  console.log("Connected to DB:", database);
-
+export const dbConnection = async () => {
   try {
+    sequelize = new Sequelize(process.env.DATABASE_URL, {
+      dialect: "postgres",
+      logging: false,
+    });
+
     await sequelize.authenticate();
 
     User = createUserModel(sequelize);
@@ -45,23 +34,18 @@ export const dbConnection = async (database, username, password) => {
     await sequelize.sync({ alter: true });
 
     for (const u of MANUAL_USERS) {
-      let user = await User.findOne({
-        where: { username: u.username },
-      });
-
-      if (!user) {
-        user = await User.create({
+      const exists = await User.findOne({ where: { username: u.username } });
+      if (!exists) {
+        await User.create({
           username: u.username,
           password: await bcrypt.hash(u.password, 10),
         });
-        console.log(`User ${u.username} created`);
       }
     }
-
-    console.log("DB connected & manual users initialized");
-  } catch (error) {
-    console.error("DB error:", error);
+  } catch (err) {
+    console.error("DB error:", err);
+    process.exit(1);
   }
 };
 
-export { sequelize, User, PriceList , Translation};
+export { sequelize, User, PriceList, Translation };

@@ -1,19 +1,29 @@
 import express from "express";
-import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
+import dotenv from "dotenv";
 import { dbConnection } from "./db/dbconnection.js";
 import router from "./route/routes.js";
 import translationRoute from "./route/translationRoute.js";
 
+dotenv.config();
+
 const app = express();
 
-app.use(cors());            
-app.use(express.json());    
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(express.json());
 
 app.use("/api", router);
 app.use("/api/translations", translationRoute);
 
-await dbConnection("Test", "postgres", "12345");
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
+app.get("*", (req, res) =>
+  res.sendFile(path.join(__dirname, "../frontend/dist/index.html"))
+);
 
-app.listen(8081, () => {
-  console.log("Server is running on port 8081");
-});
+await dbConnection();
+
+const PORT = process.env.PORT || 8081;
+app.listen(PORT);

@@ -1,11 +1,6 @@
-import React, {
-  useState,
-  forwardRef,
-  useImperativeHandle,
-} from "react";
+import React, { useState, forwardRef, useImperativeHandle } from "react";
 import "./PriceListTable.css";
 import PriceListRow from "./PriceListRow";
-
 
 const emptyRow = {
   id: null,
@@ -20,7 +15,7 @@ const emptyRow = {
 
 const PriceListTable = forwardRef(function PriceListTable(props, ref) {
   const [rows, setRows] = useState(
-    Array.from({ length: 20 }, () => ({ ...emptyRow }))
+    Array.from({ length: 20 }, () => ({ ...emptyRow })),
   );
   const [saving, setSaving] = useState(false);
   const [activeRowIndex, setActiveRowIndex] = useState(null);
@@ -46,19 +41,14 @@ const PriceListTable = forwardRef(function PriceListTable(props, ref) {
       for (const row of rows) {
         if (!row.articleNo && !row.productService) continue;
 
-        await fetch(
-          row.id
-            ? `http://localhost:8081/api/pricelist/${row.id}`
-            : "http://localhost:8081/api/pricelist",
-          {
-            method: row.id ? "PUT" : "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(row),
-          }
-        );
+        await fetch(row.id ? `/api/pricelist/${row.id}` : `/api/pricelist`, {
+          method: row.id ? "PUT" : "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(row),
+        });
       }
 
       alert("Price list saved successfully");
@@ -84,9 +74,7 @@ const PriceListTable = forwardRef(function PriceListTable(props, ref) {
             row={row}
             isActive={activeRowIndex === index}
             onClick={() => setActiveRowIndex(index)}
-            onChange={(field, value) =>
-              handleChange(index, field, value)
-            }
+            onChange={(field, value) => handleChange(index, field, value)}
           />
         ))}
       </div>
