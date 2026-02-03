@@ -10,6 +10,7 @@ import "./i18n";
 ReactDom.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <Routes>
+         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/dashboard" element = {<Dashboard></Dashboard>} ></Route>
       </Routes>

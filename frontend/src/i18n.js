@@ -12,7 +12,7 @@ i18n
     debug: true,
 
     backend: {
-      loadPath: "http://localhost:8081/api/translations?lang={{lng}}"
+      loadPath: "/api/translations?lang={{lng}}"
     },
 
     interpolation: {
