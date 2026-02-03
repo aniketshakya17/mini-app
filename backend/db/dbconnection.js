@@ -20,9 +20,16 @@ export const dbConnection = async () => {
     sequelize = new Sequelize(process.env.DATABASE_URL, {
       dialect: "postgres",
       logging: false,
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false,
+        },
+      },
     });
 
     await sequelize.authenticate();
+    console.log("DB connected");
 
     User = createUserModel(sequelize);
     PriceList = createPriceListModel(sequelize);
@@ -40,8 +47,11 @@ export const dbConnection = async () => {
           username: u.username,
           password: await bcrypt.hash(u.password, 10),
         });
+        console.log(`User ${u.username} created`);
       }
     }
+
+    console.log("DB connected & manual users initialized");
   } catch (err) {
     console.error("DB error:", err);
     process.exit(1);
