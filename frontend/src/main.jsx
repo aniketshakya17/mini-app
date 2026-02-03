@@ -4,6 +4,8 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Login from './login_page/Login';
 import "./index.css";
 import Dashboard from './dashboard_page/Dashboard';
+import "./i18n";
+
 
 ReactDom.createRoot(document.getElementById("root")).render(
     <BrowserRouter>

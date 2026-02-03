@@ -22,7 +22,7 @@ export const loginController = async (req, res) => {
     const token = jwt.sign(
       { userId: user.id, username: user.username },
       JWT_SECRET,
-      { expiresIn: "14d" }
+      { expiresIn: "30d" }
     );
     res.status(200).json({
       accessToken: token,

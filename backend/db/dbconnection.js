@@ -2,10 +2,12 @@ import { Sequelize } from "sequelize";
 import bcrypt from "bcryptjs";
 import createUserModel from "../model/userModel.js";
 import createPriceListModel from "../model/priceListModel.js";
+import createTranslationModel from "../model/translationModel.js";
 
 let sequelize;
 let User;
 let PriceList;
+let Translation;
 
 const MANUAL_USERS = [
   {
@@ -35,6 +37,7 @@ export const dbConnection = async (database, username, password) => {
 
     User = createUserModel(sequelize);
     PriceList = createPriceListModel(sequelize);
+    Translation = createTranslationModel(sequelize);
 
     User.hasMany(PriceList, { foreignKey: "userId" });
     PriceList.belongsTo(User, { foreignKey: "userId" });
@@ -61,4 +64,4 @@ export const dbConnection = async (database, username, password) => {
   }
 };
 
-export { sequelize, User, PriceList };
+export { sequelize, User, PriceList , Translation};
