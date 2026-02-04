@@ -23,7 +23,9 @@ app.get("*", (req, res) =>
   res.sendFile(path.join(__dirname, "../frontend/dist/index.html"))
 );
 
-await dbConnection();
-
 const PORT = process.env.PORT || 8081;
-app.listen(PORT);
+app.listen(PORT, async () => {
+  console.log("Server started");
+  await dbConnection();
+});
+

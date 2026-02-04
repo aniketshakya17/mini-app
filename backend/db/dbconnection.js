@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import createUserModel from "../model/userModel.js";
 import createPriceListModel from "../model/priceListModel.js";
 import createTranslationModel from "../model/translationModel.js";
+import DUMMY_PRICE_LIST from "./dummyPriceList.js";
 
 let sequelize;
 let User;
@@ -38,16 +39,33 @@ export const dbConnection = async () => {
     User.hasMany(PriceList, { foreignKey: "userId" });
     PriceList.belongsTo(User, { foreignKey: "userId" });
 
-    await sequelize.sync({ alter: true });
+    await sequelize.sync();
 
     for (const u of MANUAL_USERS) {
-      const exists = await User.findOne({ where: { username: u.username } });
-      if (!exists) {
-        await User.create({
+      let user = await User.findOne({ where: { username: u.username } });
+
+      if (!user) {
+        user = await User.create({
           username: u.username,
           password: await bcrypt.hash(u.password, 10),
         });
         console.log(`User ${u.username} created`);
+      }
+
+      if (user.username === "bob@gmail.com") {
+        const hasPrices = await PriceList.findOne({
+          where: { userId: user.id },
+        });
+
+        if (!hasPrices) {
+          for (const price of DUMMY_PRICE_LIST) {
+            await PriceList.create({
+              ...price,
+              userId: user.id,
+            });
+          }
+          console.log("Dummy price list created for Bob");
+        }
       }
     }
 

@@ -1,4 +1,9 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
+import React, {
+  useState,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import "./PriceListTable.css";
 import PriceListRow from "./PriceListRow";
 
@@ -14,17 +19,48 @@ const emptyRow = {
 };
 
 const PriceListTable = forwardRef(function PriceListTable(props, ref) {
-  const [rows, setRows] = useState(
-    Array.from({ length: 20 }, () => ({ ...emptyRow })),
-  );
+  const [rows, setRows] = useState([]);
   const [saving, setSaving] = useState(false);
   const [activeRowIndex, setActiveRowIndex] = useState(null);
 
+  useEffect(() => {
+    const loadPrices = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      try {
+        const res = await fetch("/api/pricelist", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!res.ok) throw new Error("Failed to fetch prices");
+
+        const data = await res.json();
+
+        const filledRows = [
+          ...data,
+          ...Array.from(
+            { length: Math.max(0, 20 - data.length) },
+            () => ({ ...emptyRow }),
+          ),
+        ];
+
+        setRows(filledRows);
+      } catch (err) {
+        console.error("Failed to load price list:", err);
+      }
+    };
+
+    loadPrices();
+  }, []);
+
   const handleChange = (index, field, value) => {
     setRows((prev) => {
-      const copy = [...prev];
-      copy[index] = { ...copy[index], [field]: value };
-      return copy;
+      const updated = [...prev];
+      updated[index] = { ...updated[index], [field]: value };
+      return updated;
     });
   };
 
@@ -41,14 +77,17 @@ const PriceListTable = forwardRef(function PriceListTable(props, ref) {
       for (const row of rows) {
         if (!row.articleNo && !row.productService) continue;
 
-        await fetch(row.id ? `/api/pricelist/${row.id}` : `/api/pricelist`, {
-          method: row.id ? "PUT" : "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+        await fetch(
+          row.id ? `/api/pricelist/${row.id}` : `/api/pricelist`,
+          {
+            method: row.id ? "PUT" : "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(row),
           },
-          body: JSON.stringify(row),
-        });
+        );
       }
 
       alert("Price list saved successfully");
@@ -74,7 +113,9 @@ const PriceListTable = forwardRef(function PriceListTable(props, ref) {
             row={row}
             isActive={activeRowIndex === index}
             onClick={() => setActiveRowIndex(index)}
-            onChange={(field, value) => handleChange(index, field, value)}
+            onChange={(field, value) =>
+              handleChange(index, field, value)
+            }
           />
         ))}
       </div>

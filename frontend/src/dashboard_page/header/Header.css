@@ -4,19 +4,21 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
+  padding: 0 44px;
   color: white;
   width: 100%;
-  font-family: Arial, sans-serif;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
   box-sizing: border-box;
 }
+
 
 .header-left {
   display: flex;
   align-items: center;
   gap: 10px;
-  min-width: 0;
-  margin-left: 20px;
+  max-width: 100%;
 }
 
 .header-avatar {
@@ -49,8 +51,8 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-right: 20px;
   flex-shrink: 0;
+  max-width: 100%;
 }
 
 .header-right img {

@@ -5,6 +5,7 @@
   flex-direction: column;
   background: #f7f9fc;
   font-family: Arial, sans-serif;
+  overflow: hidden;
 }
 
 .dashboard-header {
@@ -21,45 +22,9 @@
 }
 
 .dashboard-content {
+  display: flex;
+  flex-direction: column;
   flex: 1;
-  overflow-y: auto;
-  min-width: 0;
-}
-
-@media (max-width: 1024px) {
-.dashboard-body,
-.dashboard-content,
-.price-list,
-.price-table-wrapper {
-  width: 100%;
-  max-width: 100%;
-}
-
-}
-
-@media (max-width: 430px) and (orientation: portrait) {
-  .dashboard {
-    background: #ffffff;
-  }
-
-  .dashboard-body {
-    flex-direction: column;
-  }
-
-  .dashboard-content {
-    width: 100%;
-    max-width: 100%;
-  }
-}
-
-@media screen and (max-width: 932px) and (orientation: landscape) {
-  .price-list {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .price-top,
-  .actions {
-    width: 100%;
-  }
+  min-height: 0;
+  overflow: hidden;
 }

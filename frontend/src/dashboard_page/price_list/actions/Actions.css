@@ -1,8 +1,9 @@
 .actions {
   display: flex;
-  gap: 12px;
   align-items: center;
-  padding-right: 0rem; 
+  gap: 12px;
+  padding-right: 0;
+  flex-wrap: wrap;
 }
 
 .action-btn {
@@ -12,38 +13,40 @@
   border-radius: 10px;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   font-size: 14px;
   cursor: pointer;
   color: #000;
+  white-space: nowrap;
+}
+
+.action-btn span {
+  display: inline;
 }
 
 .action-btn i {
   color: #2d8bd2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
 
-
-
-
-
-@media (max-width: 430px) and (orientation: portrait){
+@media (max-width: 430px) and (orientation: portrait) {
   .actions {
     width: 100%;
-    display: flex;
     justify-content: center;
     gap: 16px;
     margin: 8px 0 12px;
   }
 
   .action-btn {
-    width: 56px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
     padding: 0;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius: 50%;
   }
 
   .action-btn span {
@@ -52,7 +55,7 @@
 
   .action-btn i {
     font-size: 18px;
-    margin-left: 8px;
+    margin: 0;
   }
 
   .search-wrapper {
@@ -61,8 +64,9 @@
     margin: 0;
   }
 }
-@media (min-width: 431px) and (max-width: 810px) {
 
+
+@media (min-width: 431px) and (max-width: 810px) {
   .price-top {
     display: flex;
     flex-direction: column;
@@ -81,27 +85,32 @@
 
   .actions {
     width: 100%;
-    justify-content: flex-start;   
+    justify-content: flex-start;
     padding: 0 16px;
     margin-top: 4px;
-    order: 2;                     
-    flex-wrap: wrap;
+    order: 2;
+    gap: 10px;
+  }
+
+  .action-btn {
+    font-size: 13px;
+    padding: 6px 10px;
   }
 }
 
 
-
-@media screen and (max-width: 932px) and (orientation: landscape) {
+@media (max-width: 932px) and (orientation: landscape) {
   .actions {
     width: 100%;
     justify-content: space-evenly;
+    gap: 8px;
   }
 
   .action-btn {
-    width: auto;
-    height: 40px;
-    padding: 6px 14px;
+    height: 38px;
+    padding: 6px 10px;
     border-radius: 22px;
+    font-size: 13px;
   }
 
   .action-btn span {

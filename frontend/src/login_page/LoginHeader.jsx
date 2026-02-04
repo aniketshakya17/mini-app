@@ -64,27 +64,23 @@ function LoginHeader() {
           }}
         >
           <span>{languages[currentLang].label}</span>
-          <img
-            src={languages[currentLang].flag}
-            alt={currentLang}
-          />
+          <img src={languages[currentLang].flag} alt={currentLang} />
         </div>
 
         {langOpen && (
-          <div
-            className="lang-menu"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {Object.entries(languages).map(([code, l]) => (
-              <div
-                key={code}
-                className="lang-item"
-                onClick={() => changeLanguage(code)}
-              >
-                <span>{l.label}</span>
-                <img src={l.flag} alt={code} />
-              </div>
-            ))}
+          <div className="lang-menu" onClick={(e) => e.stopPropagation()}>
+            {Object.entries(languages)
+              .filter(([code]) => code !== currentLang)
+              .map(([code, l]) => (
+                <div
+                  key={code}
+                  className="lang-item"
+                  onClick={() => changeLanguage(code)}
+                >
+                  <span>{l.label}</span>
+                  <img src={l.flag} alt={code} />
+                </div>
+              ))}
           </div>
         )}
       </div>
