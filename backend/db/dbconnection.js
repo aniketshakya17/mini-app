@@ -20,12 +20,6 @@ export const dbConnection = async () => {
     sequelize = new Sequelize(process.env.DATABASE_URL, {
       dialect: "postgres",
       logging: false,
-      dialectOptions: {
-        ssl: {
-          require: true,
-          rejectUnauthorized: false,
-        },
-      },
     });
 
     await sequelize.authenticate();
@@ -41,14 +35,15 @@ export const dbConnection = async () => {
     await sequelize.sync();
 
     for (const u of MANUAL_USERS) {
-      let user = await User.findOne({ where: { username: u.username } });
+      const existingUser = await User.findOne({
+        where: { username: u.username },
+      });
 
-      if (!user) {
-        user = await User.create({
+      if (!existingUser) {
+        await User.create({
           username: u.username,
           password: await bcrypt.hash(u.password, 10),
         });
-        console.log(`User ${u.username} created`);
       }
     }
 
