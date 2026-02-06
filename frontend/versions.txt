@@ -1,0 +1,18 @@
+frontend@0.0.0 D:\mini-app\frontend
+├── @eslint/js@9.39.2
+├── @types/react-dom@19.2.3
+├── @types/react@19.2.10
+├── @vitejs/plugin-react@5.1.2
+├── eslint-plugin-react-hooks@7.0.1
+├── eslint-plugin-react-refresh@0.4.26
+├── eslint@9.39.2
+├── globals@16.5.0
+├── i18next-http-backend@3.0.2
+├── i18next@25.8.0
+├── react-dom@19.2.4
+├── react-i18next@16.5.4
+├── react-icons@5.5.0
+├── react-router-dom@7.13.0
+├── react@19.2.4
+└── vite@7.3.1
+

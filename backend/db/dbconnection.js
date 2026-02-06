@@ -3,17 +3,14 @@ import bcrypt from "bcryptjs";
 import createUserModel from "../model/userModel.js";
 import createPriceListModel from "../model/priceListModel.js";
 import createTranslationModel from "../model/translationModel.js";
+import { seedPriceListForUser, seedTranslationsSafe } from "./init.js";
 
 let sequelize;
 let User;
 let PriceList;
 let Translation;
 
-const MANUAL_USERS = [
-  { username: "john@gmail.com", password: "john123" },
-  { username: "emma@gmail.com", password: "emma123" },
-  { username: "bob@gmail.com", password: "bob123" },
-];
+const MANUAL_USERS = [{ username: "bob@gmail.com", password: "bob123" }];
 
 export const dbConnection = async () => {
   try {
@@ -34,18 +31,25 @@ export const dbConnection = async () => {
 
     await sequelize.sync();
 
-    for (const u of MANUAL_USERS) {
-      const existingUser = await User.findOne({
-        where: { username: u.username },
-      });
 
-      if (!existingUser) {
-        await User.create({
+    for (const u of MANUAL_USERS) {
+      let user = await User.findOne({ where: { username: u.username } });
+
+      if (!user) {
+        user = await User.create({
           username: u.username,
           password: await bcrypt.hash(u.password, 10),
         });
+        console.log(`User ${u.username} created`);
       }
     }
+
+    const bob = await User.findOne({
+      where: { username: "bob@gmail.com" },
+    });
+
+    await seedPriceListForUser(PriceList, bob.id);
+    await seedTranslationsSafe(Translation);
 
     console.log("DB connected & manual users initialized");
   } catch (err) {
