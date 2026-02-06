@@ -3,7 +3,7 @@
   align-items: center;
   gap: 12px;
   padding-right: 0;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
 }
 
 .action-btn {

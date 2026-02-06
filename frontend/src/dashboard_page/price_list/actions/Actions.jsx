@@ -1,7 +1,7 @@
 import React from "react";
 import "./Actions.css";
 
-function Actions({ onSave, saving = false }) {
+function Actions() {
   return (
     <div className="actions">
       <button className="action-btn add" type="button">
@@ -19,15 +19,7 @@ function Actions({ onSave, saving = false }) {
         <i className="fa-solid fa-sliders" />
       </button>
 
-      <button
-        className="action-btn save"
-        type="button"
-        onClick={onSave}
-        disabled={saving || !onSave}
-      >
-        <span>{saving ? "Saving..." : "Save"}</span>
-        <i className="fa-solid fa-floppy-disk" />
-      </button>
+
     </div>
   );
 }

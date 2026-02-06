@@ -1,13 +1,19 @@
 import React, {
   useState,
   useEffect,
+  useRef,
   forwardRef,
   useImperativeHandle,
 } from "react";
 import "./PriceListTable.css";
 import PriceListRow from "./PriceListRow";
 
-const emptyRow = {
+const API_BASE = "/api/pricelist";
+const AUTOSAVE_DELAY = 1000;
+const ROW_LIMIT = 20;
+const DRAFT_KEY = "pricelist_draft";
+
+const EMPTY_ROW = {
   id: null,
   articleNo: "",
   productService: "",
@@ -18,10 +24,13 @@ const emptyRow = {
   description: "",
 };
 
-const PriceListTable = forwardRef(function PriceListTable(props, ref) {
+const PriceListTable = forwardRef(function PriceListTable(_, ref) {
   const [rows, setRows] = useState([]);
   const [saving, setSaving] = useState(false);
   const [activeRowIndex, setActiveRowIndex] = useState(null);
+
+  const autosaveTimer = useRef(null);
+  const initialLoad = useRef(true);
 
   useEffect(() => {
     const loadPrices = async () => {
@@ -29,27 +38,31 @@ const PriceListTable = forwardRef(function PriceListTable(props, ref) {
       if (!token) return;
 
       try {
-        const res = await fetch("/api/pricelist", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+        const res = await fetch(API_BASE, {
+          headers: { Authorization: `Bearer ${token}` },
         });
 
-        if (!res.ok) throw new Error("Failed to fetch prices");
+        if (!res.ok) throw new Error();
 
-        const data = await res.json();
+        const backendData = await res.json();
+        const draft = JSON.parse(localStorage.getItem(DRAFT_KEY));
+
+        const baseRows =
+          Array.isArray(draft) && draft.length ? draft : backendData;
 
         const filledRows = [
-          ...data,
+          ...baseRows,
           ...Array.from(
-            { length: Math.max(0, 20 - data.length) },
-            () => ({ ...emptyRow }),
+            { length: Math.max(0, ROW_LIMIT - baseRows.length) },
+            () => ({ ...EMPTY_ROW })
           ),
         ];
 
         setRows(filledRows);
-      } catch (err) {
-        console.error("Failed to load price list:", err);
+      } catch {
+        setRows(
+          Array.from({ length: ROW_LIMIT }, () => ({ ...EMPTY_ROW }))
+        );
       }
     };
 
@@ -60,47 +73,63 @@ const PriceListTable = forwardRef(function PriceListTable(props, ref) {
     setRows((prev) => {
       const updated = [...prev];
       updated[index] = { ...updated[index], [field]: value };
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(updated));
       return updated;
     });
   };
 
-  const saveAll = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      alert("Not authenticated");
+  useEffect(() => {
+    if (!rows.length) return;
+
+    if (initialLoad.current) {
+      initialLoad.current = false;
       return;
     }
 
-    setSaving(true);
+    const token = localStorage.getItem("token");
+    if (!token) return;
 
-    try {
-      for (const row of rows) {
-        if (!row.articleNo && !row.productService) continue;
+    clearTimeout(autosaveTimer.current);
 
-        await fetch(
-          row.id ? `/api/pricelist/${row.id}` : `/api/pricelist`,
-          {
-            method: row.id ? "PUT" : "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(row),
-          },
-        );
+    autosaveTimer.current = setTimeout(async () => {
+      setSaving(true);
+
+      try {
+        const updatedRows = [...rows];
+
+        for (let i = 0; i < rows.length; i++) {
+          const row = rows[i];
+          if (!row.articleNo && !row.productService) continue;
+
+          const res = await fetch(
+            row.id ? `${API_BASE}/${row.id}` : API_BASE,
+            {
+              method: row.id ? "PUT" : "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify(row),
+            }
+          );
+
+          if (!res.ok) continue;
+
+          const saved = await res.json();
+          if (!row.id && saved?.id) updatedRows[i] = saved;
+        }
+
+        setRows(updatedRows);
+        localStorage.removeItem(DRAFT_KEY);
+      } finally {
+        setSaving(false);
       }
+    }, AUTOSAVE_DELAY);
 
-      alert("Price list saved successfully");
-    } catch (err) {
-      console.error("Save failed:", err);
-      alert("Failed to save price list");
-    } finally {
-      setSaving(false);
-    }
-  };
+    return () => clearTimeout(autosaveTimer.current);
+  }, [rows]);
 
   useImperativeHandle(ref, () => ({
-    saveAll,
     saving,
   }));
 
@@ -109,7 +138,7 @@ const PriceListTable = forwardRef(function PriceListTable(props, ref) {
       <div className="price-table">
         {rows.map((row, index) => (
           <PriceListRow
-            key={index}
+            key={row.id ?? index}
             row={row}
             isActive={activeRowIndex === index}
             onClick={() => setActiveRowIndex(index)}
